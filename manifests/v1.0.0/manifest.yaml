@@ -17,19 +17,19 @@ tools:
     platforms:
       linux-amd64:
         url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-x86_64-unknown-linux-gnu.tar.gz"
-        sha256: "TODO-fill-from-upstream-SHASUMS"
+        sha256: "13452b7a99d953e970ec52861de03f6f2e00bfee2c4357bc63c292a70472b386"
       linux-arm64:
         url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-aarch64-unknown-linux-gnu.tar.gz"
-        sha256: "TODO"
+        sha256: "f4316a657c964994d7eb736ba875f3f685c4b61e961f514e98fb50ed181da72a"
       darwin-amd64:
         url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-x86_64-apple-darwin.tar.gz"
-        sha256: "TODO"
+        sha256: "f82ed219d9e4cc22ac24168450567351881930774197bf9ad4bb5fc50e1eaf0d"
       darwin-arm64:
         url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-aarch64-apple-darwin.tar.gz"
-        sha256: "TODO"
+        sha256: "dd3fa053379017923a4692cabdebb96844f83c7a516d9e6cb30502574cbd322d"
       windows-amd64:
         url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-x86_64-pc-windows-msvc.zip"
-        sha256: "TODO"
+        sha256: "d97566f535f07a9bbcaed90900a4a9e1b800076daa3193f23d17910879e7fbc5"
 
   node:
     version: "22.11.0"
@@ -41,19 +41,19 @@ tools:
     platforms:
       linux-amd64:
         url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz"
-        sha256: "TODO"
+        sha256: "83bf07dd343002a26211cf1fcd46a9d9534219aad42ee02847816940bf610a72"
       linux-arm64:
         url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-arm64.tar.xz"
-        sha256: "TODO"
+        sha256: "6031d04b98f59ff0f7cb98566f65b115ecd893d3b7870821171708cdbaf7ae6e"
       darwin-amd64:
         url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-darwin-x64.tar.xz"
-        sha256: "TODO"
+        sha256: "ab28d1784625d151e3f608a9412a009118f376118ed842ae643f8c2efdfb0af6"
       darwin-arm64:
         url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-darwin-arm64.tar.xz"
-        sha256: "TODO"
+        sha256: "c379a90c6aa605b74042a233ddcda4247b347ba5732007d280e44422cc8f9ecb"
       windows-amd64:
         url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-win-x64.zip"
-        sha256: "TODO"
+        sha256: "905373a059aecaf7f48c1ce10ffbd5334457ca00f678747f19db5ea7d256c236"
 
   ripgrep:
     version: "14.1.1"
@@ -61,19 +61,19 @@ tools:
     platforms:
       linux-amd64:
         url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-unknown-linux-musl.tar.gz"
-        sha256: "TODO"
+        sha256: "4cf9f2741e6c465ffdb7c26f38056a59e2a2544b51f7cc128ef28337eeae4d8e"
       linux-arm64:
         url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-aarch64-unknown-linux-gnu.tar.gz"
-        sha256: "TODO"
+        sha256: "c827481c4ff4ea10c9dc7a4022c8de5db34a5737cb74484d62eb94a95841ab2f"
       darwin-amd64:
         url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-apple-darwin.tar.gz"
-        sha256: "TODO"
+        sha256: "fc87e78f7cb3fea12d69072e7ef3b21509754717b746368fd40d88963630e2b3"
       darwin-arm64:
         url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-aarch64-apple-darwin.tar.gz"
-        sha256: "TODO"
+        sha256: "24ad76777745fbff131c8fbc466742b011f925bfa4fffa2ded6def23b5b937be"
       windows-amd64:
         url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-pc-windows-msvc.zip"
-        sha256: "TODO"
+        sha256: "d0f534024c42afd6cb4d38907c25cd2b249b79bbe6cc1dbee8e3e37c2b6e25a1"
 
   jq:
     version: "1.7.1"
@@ -82,16 +82,16 @@ tools:
     platforms:
       linux-amd64:
         url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64"
-        sha256: "TODO"
+        sha256: "5942c9b0934e510ee61eb3e30273f1b3fe2590df93933a93d7c58b81d19c8ff5"
       linux-arm64:
         url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-arm64"
-        sha256: "TODO"
+        sha256: "4dd2d8a0661df0b22f1bb9a1f9830f06b6f3b8f7d91211a1ef5d7c4f06a8b4a5"
       darwin-amd64:
         url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-macos-amd64"
-        sha256: "TODO"
+        sha256: "4155822bbf5ea90f5c79cf254665975eb4274d426d0709770c21774de5407443"
       darwin-arm64:
         url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-macos-arm64"
-        sha256: "TODO"
+        sha256: "0bbe619e663e0de2c550be2fe0d240d076799d6f8a652b70fa04aea8a8362e8a"
       windows-amd64:
         url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-windows-amd64.exe"
-        sha256: "TODO"
+        sha256: "7451fbbf37feffb9bf262bd97c54f0da558c63f0748e64152dd87b0a07b6d6ab"
