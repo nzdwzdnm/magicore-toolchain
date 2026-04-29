@@ -119,3 +119,4 @@ See \`dist/manifest.json\` in this release for tarball SHA256s." \
             dist/toolchain-*.tar.zst \
             dist/manifest.json \
             "manifests/$VERSION/manifest.yaml"
+
