@@ -1,10 +1,5 @@
-# Workflow: build and publish toolchain release artifacts.
-#
-# Trigger manually via `gh workflow run publish.yaml -f version=v1.0.0`,
-# or automatically on tag push matching v*.
 name: publish
-
-"on":
+on:
   workflow_dispatch:
     inputs:
       version:
@@ -88,13 +83,15 @@ jobs:
 
       - name: Generate manifest.json
         run: |
-          jq -n --arg v "${{ steps.ver.outputs.version }}" \
-            '[inputs] | {toolchain_version: $v, artifacts: .}' \
-            <(for f in dist/toolchain-*.tar.zst; do
-                sha=$(sha256sum "$f" | awk '{print $1}')
-                plat=$(basename "$f" | sed "s/toolchain-${{ steps.ver.outputs.version }}-//;s/\.tar\.zst//")
-                echo "{\"platform\":\"$plat\",\"file\":\"$(basename $f)\",\"sha256\":\"$sha\"}"
-              done) > dist/manifest.json
+          VERSION="${{ steps.ver.outputs.version }}"
+          entries=()
+          for f in dist/toolchain-*.tar.zst; do
+            sha=$(sha256sum "$f" | awk '{print $1}')
+            plat=$(basename "$f" | sed "s/toolchain-${VERSION}-//;s/\.tar\.zst//")
+            entries+=("{\"platform\":\"$plat\",\"file\":\"$(basename $f)\",\"sha256\":\"$sha\"}")
+          done
+          IFS=,
+          echo "{\"toolchain_version\":\"$VERSION\",\"artifacts\":[${entries[*]}]}" | jq . > dist/manifest.json
           cat dist/manifest.json
 
       - name: Create GitHub release
@@ -103,6 +100,7 @@ jobs:
         run: |
           VERSION="${{ steps.ver.outputs.version }}"
           gh release create "$VERSION" \
+            --repo "${{ github.repository }}" \
             --title "Bundled toolchain $VERSION" \
             --notes "## Bundled Toolchain $VERSION
 
@@ -112,11 +110,7 @@ Tools bundled:
 - uv 0.5.10
 - node 22.11.0 (LTS) + npm + npx
 - ripgrep 14.1.1
-- jq 1.7.1
-
-See \`manifests/$VERSION/manifest.yaml\` for upstream SHA256 verification checksums.
-See \`dist/manifest.json\` in this release for tarball SHA256s." \
+- jq 1.7.1" \
             dist/toolchain-*.tar.zst \
             dist/manifest.json \
             "manifests/$VERSION/manifest.yaml"
-
