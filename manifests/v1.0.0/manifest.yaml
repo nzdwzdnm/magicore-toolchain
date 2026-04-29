@@ -1,0 +1,97 @@
+# manifest.yaml for toolchain v1.0.0
+#
+# This file is the upstream-source pin: scripts/fetch-and-pack.sh reads
+# it, downloads each URL, verifies sha256, and emits the per-platform
+# tar.zst tarballs that ship as Release assets.
+#
+# SHA256 values: pulled from upstream-published SHASUMS or release sidecar.
+# Update procedure: bump the version, run `make refresh-shas` to recompute,
+# commit the diff. NEVER edit a sha by hand.
+
+manifest_version: "1.0.0"
+
+tools:
+  uv:
+    version: "0.5.10"
+    binaries: [uv, uvx]
+    platforms:
+      linux-amd64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-x86_64-unknown-linux-gnu.tar.gz"
+        sha256: "TODO-fill-from-upstream-SHASUMS"
+      linux-arm64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-aarch64-unknown-linux-gnu.tar.gz"
+        sha256: "TODO"
+      darwin-amd64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-x86_64-apple-darwin.tar.gz"
+        sha256: "TODO"
+      darwin-arm64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-aarch64-apple-darwin.tar.gz"
+        sha256: "TODO"
+      windows-amd64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.5.10/uv-x86_64-pc-windows-msvc.zip"
+        sha256: "TODO"
+
+  node:
+    version: "22.11.0"
+    install_links:
+      - { name: "node", target: "node-v22.11.0/bin/node" }
+      - { name: "npm",  target: "node-v22.11.0/bin/npm" }
+      - { name: "npx",  target: "node-v22.11.0/bin/npx" }
+    keep_directory: "node-v22.11.0/"
+    platforms:
+      linux-amd64:
+        url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz"
+        sha256: "TODO"
+      linux-arm64:
+        url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-arm64.tar.xz"
+        sha256: "TODO"
+      darwin-amd64:
+        url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-darwin-x64.tar.xz"
+        sha256: "TODO"
+      darwin-arm64:
+        url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-darwin-arm64.tar.xz"
+        sha256: "TODO"
+      windows-amd64:
+        url: "https://nodejs.org/dist/v22.11.0/node-v22.11.0-win-x64.zip"
+        sha256: "TODO"
+
+  ripgrep:
+    version: "14.1.1"
+    binaries: [rg]
+    platforms:
+      linux-amd64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-unknown-linux-musl.tar.gz"
+        sha256: "TODO"
+      linux-arm64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-aarch64-unknown-linux-gnu.tar.gz"
+        sha256: "TODO"
+      darwin-amd64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-apple-darwin.tar.gz"
+        sha256: "TODO"
+      darwin-arm64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-aarch64-apple-darwin.tar.gz"
+        sha256: "TODO"
+      windows-amd64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-pc-windows-msvc.zip"
+        sha256: "TODO"
+
+  jq:
+    version: "1.7.1"
+    binaries: [jq]
+    is_single_binary: true
+    platforms:
+      linux-amd64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64"
+        sha256: "TODO"
+      linux-arm64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-arm64"
+        sha256: "TODO"
+      darwin-amd64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-macos-amd64"
+        sha256: "TODO"
+      darwin-arm64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-macos-arm64"
+        sha256: "TODO"
+      windows-amd64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-windows-amd64.exe"
+        sha256: "TODO"
