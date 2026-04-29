@@ -1,0 +1,97 @@
+# manifest.yaml for toolchain v1.1.0
+#
+# This file is the upstream-source pin: scripts/fetch-and-pack.sh reads
+# it, downloads each URL, verifies sha256, and emits the per-platform
+# tar.zst tarballs that ship as Release assets.
+#
+# SHA256 values: pulled from upstream-published SHASUMS or release sidecar.
+# Update procedure: bump the version, run `make refresh-shas` to recompute,
+# commit the diff. NEVER edit a sha by hand.
+
+manifest_version: "1.1.0"
+
+tools:
+  uv:
+    version: "0.11.8"
+    binaries: [uv, uvx]
+    platforms:
+      linux-amd64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.11.8/uv-x86_64-unknown-linux-gnu.tar.gz"
+        sha256: "56dd1b66701ecb62fe896abb919444e4b83c5e8645cca953e6ddd496ff8a0feb"
+      linux-arm64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.11.8/uv-aarch64-unknown-linux-gnu.tar.gz"
+        sha256: "eee8dd658d20e5ac85fec9c2326b6cbc9d83a1eef09ef07433e58698ac849591"
+      darwin-amd64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.11.8/uv-x86_64-apple-darwin.tar.gz"
+        sha256: "c59d73bf34b58bc8e33a11629f7a255c11789fd00f03cd3e68ab2d1603645de9"
+      darwin-arm64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.11.8/uv-aarch64-apple-darwin.tar.gz"
+        sha256: "c729adb365114e844dd7f9316313a7ed6443b89bb5681d409eebac78b0bd06c8"
+      windows-amd64:
+        url: "https://github.com/astral-sh/uv/releases/download/0.11.8/uv-x86_64-pc-windows-msvc.zip"
+        sha256: "c84629a56e0706b69a47ea35862208af827cb6fbfa1d0ca763c52c67594637e8"
+
+  node:
+    version: "24.15.0"
+    install_links:
+      - { name: "node", target: "node-v24.15.0/bin/node" }
+      - { name: "npm",  target: "node-v24.15.0/bin/npm" }
+      - { name: "npx",  target: "node-v24.15.0/bin/npx" }
+    keep_directory: "node-v24.15.0/"
+    platforms:
+      linux-amd64:
+        url: "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-x64.tar.xz"
+        sha256: "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6"
+      linux-arm64:
+        url: "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-arm64.tar.xz"
+        sha256: "f3d5a797b5d210ce8e2cb265544c8e482eaedcb8aa409a8b46da7e8595d0dda0"
+      darwin-amd64:
+        url: "https://nodejs.org/dist/v24.15.0/node-v24.15.0-darwin-x64.tar.xz"
+        sha256: "5d627245b9f53cb2512cc21b7aa6aad693106affadd91e0c8f42d600fb7ba444"
+      darwin-arm64:
+        url: "https://nodejs.org/dist/v24.15.0/node-v24.15.0-darwin-arm64.tar.xz"
+        sha256: "af5cfaeafe603aaf7599f287fd9d100bb41f16794f49788fa59dd3f25546930f"
+      windows-amd64:
+        url: "https://nodejs.org/dist/v24.15.0/node-v24.15.0-win-x64.zip"
+        sha256: "cc5149eabd53779ce1e7bdc5401643622d0c7e6800ade18928a767e940bb0e62"
+
+  ripgrep:
+    version: "15.1.0"
+    binaries: [rg]
+    platforms:
+      linux-amd64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-unknown-linux-musl.tar.gz"
+        sha256: "1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599"
+      linux-arm64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-unknown-linux-gnu.tar.gz"
+        sha256: "2b661c6ef508e902f388e9098d9c4c5aca72c87b55922d94abdba830b4dc885e"
+      darwin-amd64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-apple-darwin.tar.gz"
+        sha256: "64811cb24e77cac3057d6c40b63ac9becf9082eedd54ca411b475b755d334882"
+      darwin-arm64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-apple-darwin.tar.gz"
+        sha256: "378e973289176ca0c6054054ee7f631a065874a352bf43f0fa60ef079b6ba715"
+      windows-amd64:
+        url: "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
+        sha256: "124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a"
+
+  jq:
+    version: "1.8.1"
+    binaries: [jq]
+    is_single_binary: true
+    platforms:
+      linux-amd64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-amd64"
+        sha256: "020468de7539ce70ef1bceaf7cde2e8c4f2ca6c3afb84642aabc5c97d9fc2a0d"
+      linux-arm64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-arm64"
+        sha256: "6bc62f25981328edd3cfcfe6fe51b073f2d7e7710d7ef7fcdac28d4e384fc3d4"
+      darwin-amd64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-macos-amd64"
+        sha256: "b98e283ff26cd7478f6fb18cc081ca0e0cb2e9980300f0bfc8bb26854d347eb2"
+      darwin-arm64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-macos-arm64"
+        sha256: "a9fe3ea2f86dfc72f6728417521ec9067b343277152b114f4e98d8cb0e263603"
+      windows-amd64:
+        url: "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-windows-amd64.exe"
+        sha256: "23cb60a1354eed6bcc8d9b9735e8c7b388cd1fdcb75726b93bc299ef22dd9334"
