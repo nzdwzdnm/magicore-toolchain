@@ -90,7 +90,12 @@ jobs:
           IFS=,
           printf '{"toolchain_version":"%s","artifacts":[%s]}' "$VERSION" "${entries[*]}" | jq . > dist/manifest.json
           cat dist/manifest.json
-          printf '## Bundled Toolchain %s\n\nPlatforms: linux-amd64, linux-arm64, darwin-amd64, darwin-arm64, windows-amd64\n\nTools bundled:\n- uv 0.5.10\n- node 22.11.0 LTS + npm + npx\n- ripgrep 14.1.1\n- jq 1.7.1\n' "$VERSION" > /tmp/notes.md
+          UV_VER=$(yq -r '.tools.uv.version' "manifests/$VERSION/manifest.yaml")
+          NODE_VER=$(yq -r '.tools.node.version' "manifests/$VERSION/manifest.yaml")
+          RG_VER=$(yq -r '.tools.ripgrep.version' "manifests/$VERSION/manifest.yaml")
+          JQ_VER=$(yq -r '.tools.jq.version' "manifests/$VERSION/manifest.yaml")
+          printf '## Bundled Toolchain %s\n\nPlatforms: linux-amd64, linux-arm64, darwin-amd64, darwin-arm64, windows-amd64\n\nTools bundled:\n- uv %s\n- node %s LTS + npm + npx\n- ripgrep %s\n- jq %s\n' \
+            "$VERSION" "$UV_VER" "$NODE_VER" "$RG_VER" "$JQ_VER" > /tmp/notes.md
 
       - name: Create GitHub release
         env:
