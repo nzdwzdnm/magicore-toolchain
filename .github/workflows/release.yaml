@@ -1,0 +1,13 @@
+name: release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version"
+        required: true
+        default: "v1.0.0"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "version=${{ inputs.version }}"
