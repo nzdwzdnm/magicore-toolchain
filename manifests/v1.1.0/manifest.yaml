@@ -38,6 +38,9 @@ tools:
       - { name: "npm",  target: "node-v24.15.0/bin/npm" }
       - { name: "npx",  target: "node-v24.15.0/bin/npx" }
     keep_directory: "node-v24.15.0/"
+    runtime_paths:
+      - "node-v24.15.0*/lib/node_modules/npm"
+      - "node-v24.15.0*/node_modules/npm"
     platforms:
       linux-amd64:
         url: "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-x64.tar.xz"
