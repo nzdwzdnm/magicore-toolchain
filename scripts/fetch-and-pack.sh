@@ -122,6 +122,25 @@ link_or_copy() {
   ln -s "$(realpath --relative-to="$(dirname "$dst")" "$src")" "$dst"
 }
 
+windows_relative_path() {
+  local from="$1" to="$2"
+  realpath --relative-to="$from" "$to" | sed 's#/#\\#g'
+}
+
+write_windows_node_cmd_wrapper() {
+  local stage="$1" wrapper_name="$2" cli_name="$3"
+  local npm_root cli rel_cli
+  npm_root="$(first_match "$stage" -type d -path '*/node_modules/npm')"
+  [[ -n "$npm_root" ]] || { echo "missing Windows npm runtime" >&2; exit 1; }
+  cli="${npm_root}/bin/${cli_name}"
+  [[ -f "$cli" ]] || { echo "missing Windows npm CLI ${cli}" >&2; exit 1; }
+  rel_cli="$(windows_relative_path "${stage}/bin" "$cli")"
+  printf '@ECHO off\r\n' > "${stage}/bin/${wrapper_name}.cmd"
+  printf 'SETLOCAL\r\n' >> "${stage}/bin/${wrapper_name}.cmd"
+  printf '"%%~dp0node.exe" "%%~dp0%s" %%*\r\n' "$rel_cli" >> "${stage}/bin/${wrapper_name}.cmd"
+  chmod +x "${stage}/bin/${wrapper_name}.cmd"
+}
+
 first_match() {
   local root="$1"
   shift
@@ -147,21 +166,20 @@ normalize_platform() {
     "$stage"/ripgrep-*/CHANGELOG.md
 
   if is_windows_platform "$plat"; then
-    local uv uvx node npm npx rg
+    local uv uvx node rg
     uv="$(first_match "$stage" -type f -name 'uv.exe')"
     uvx="$(first_match "$stage" -type f -name 'uvx.exe')"
     node="$(first_match "$stage" -type f -name 'node.exe')"
-    npm="$(first_match "$stage" -type f -name 'npm.cmd')"
-    npx="$(first_match "$stage" -type f -name 'npx.cmd')"
     rg="$(first_match "$stage" -type f -name 'rg.exe')"
 
     [[ -n "$uv" ]] && link_or_copy "$uv" "$stage/bin/uv.exe" "$plat"
     [[ -n "$uvx" ]] && link_or_copy "$uvx" "$stage/bin/uvx.exe" "$plat"
     [[ -n "$node" ]] && link_or_copy "$node" "$stage/bin/node.exe" "$plat"
-    [[ -n "$npm" ]] && link_or_copy "$npm" "$stage/bin/npm.cmd" "$plat"
-    [[ -n "$npx" ]] && link_or_copy "$npx" "$stage/bin/npx.cmd" "$plat"
+    write_windows_node_cmd_wrapper "$stage" "npm" "npm-cli.js"
+    write_windows_node_cmd_wrapper "$stage" "npx" "npx-cli.js"
     [[ -n "$rg" ]] && link_or_copy "$rg" "$stage/bin/rg.exe" "$plat"
     copy_runtime_paths "$stage" "node"
+    validate_windows_npm_wrappers "$stage"
     return
   fi
 
@@ -204,6 +222,35 @@ link_node_npm_runtime() {
   mkdir -p "${node_root}/bin/node_modules" "${node_root}/node_modules"
   ln -sfn "../lib/node_modules/npm" "${node_root}/node_modules/npm"
   ln -sfn "../../lib/node_modules/npm" "${node_root}/bin/node_modules/npm"
+}
+
+validate_windows_npm_wrappers() {
+  local stage="$1"
+  local npm_root
+  npm_root="$(first_match "$stage" -type d -path '*/node_modules/npm')"
+  [[ -n "$npm_root" ]] || { echo "missing Windows npm runtime" >&2; exit 1; }
+  [[ -f "${stage}/bin/npm.cmd" ]] || { echo "missing bin/npm.cmd" >&2; exit 1; }
+  [[ -f "${stage}/bin/npx.cmd" ]] || { echo "missing bin/npx.cmd" >&2; exit 1; }
+
+  local required
+  for required in npm-cli.js npm-prefix.js npx-cli.js; do
+    [[ -f "${npm_root}/bin/${required}" ]] || {
+      echo "missing Windows npm runtime file ${npm_root}/bin/${required}" >&2
+      exit 1
+    }
+  done
+
+  local npm_cli npx_cli
+  npm_cli="$(windows_relative_path "${stage}/bin" "${npm_root}/bin/npm-cli.js")"
+  npx_cli="$(windows_relative_path "${stage}/bin" "${npm_root}/bin/npx-cli.js")"
+  grep -Fq "%~dp0${npm_cli}" "${stage}/bin/npm.cmd" || {
+    echo "bin/npm.cmd does not point at ${npm_cli}" >&2
+    exit 1
+  }
+  grep -Fq "%~dp0${npx_cli}" "${stage}/bin/npx.cmd" || {
+    echo "bin/npx.cmd does not point at ${npx_cli}" >&2
+    exit 1
+  }
 }
 
 write_stage_manifest() {
